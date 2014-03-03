@@ -1,6 +1,7 @@
 
 import java.util.*;
 
+
 public class Database {
 	ArrayList<Pair<String, Integer>> _slots;
 	
