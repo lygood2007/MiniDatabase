@@ -3,15 +3,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
 
-import com.sun.tools.javac.util.Pair;
+//import com.sun.tools.javac.util.Pair;
 
 
 public class MiniDatabase {
 	
 	private boolean appendCommands = false; 
 	private LinkedList<CmdNode> commands = new LinkedList<CmdNode>();
-
-	
 	public void readUserInput(){
 	    //  open up standard input
 	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
