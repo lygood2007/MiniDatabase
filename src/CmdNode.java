@@ -32,10 +32,16 @@ public class CmdNode {
 			return;
 		}
 		assert _tmp != null;
+		for(Pair<String, Integer> p:_tmp){
+			if(p.getKey().equals(str)){
+				p.setValue(val);
+				return;
+			}
+		}
 		_tmp.add(new Pair<String, Integer>(str, val));
 	}
 	
-	private LinkedList<Pair<String, Integer> > getList(){
+	public LinkedList<Pair<String, Integer> > getList(){
 		return _tmp;
 	}
 	
@@ -48,4 +54,15 @@ public class CmdNode {
 		}
 		return null;
 	}
+	
+	public int findNum(Integer val){
+		int ret = 0;
+		for(Pair<String, Integer> p: _tmp){
+			if(p.getValue().equals(val)){
+				ret++;
+			}
+		}
+		return ret;
+	}
+
 }

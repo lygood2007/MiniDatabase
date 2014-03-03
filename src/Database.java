@@ -26,6 +26,12 @@ public class Database {
 			return;
 		}
 		assert _slots != null;
+		for(Pair<String, Integer> p:_slots){
+			if(p.getKey().equals(str)){
+				p.setValue(val);
+				return;
+			}
+		}
 		_slots.add(new Pair<String, Integer>(str, val));
 	}
 	
@@ -37,5 +43,18 @@ public class Database {
 			}
 		}
 		return ret;
+	}
+	
+	public void pushFromCmdNode(CmdNode node){
+		LinkedList<Pair<String, Integer>> list = node.getList();
+		for(Pair<String, Integer> p : list){
+			this.addItem(p.getKey(), p.getValue());
+		}
+	}
+	
+	public void printAll(){
+		for(Pair<String, Integer> p : _slots){
+			System.out.println(p.getKey()+","+p.getValue());
+		}		
 	}
 }
