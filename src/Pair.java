@@ -1,5 +1,5 @@
 /*
- * Pair: used for storing <key,val> pair
+ * Pair: used for storing <key,val>
  * 
  */
 public class Pair<K, V> {
@@ -23,5 +23,4 @@ public class Pair<K, V> {
     public V getValue() {
         return _second;
     }
-
 }

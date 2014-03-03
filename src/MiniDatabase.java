@@ -2,13 +2,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import com.sun.tools.javac.util.Pair;
+//import com.sun.tools.javac.util.Pair;
 
 
 public class MiniDatabase {
 	
 	private boolean appendCommands = false; 
-	
+
 	public void readUserInput(){
 	    //  open up standard input
 	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
