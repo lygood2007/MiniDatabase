@@ -7,7 +7,7 @@ import java.util.LinkedList;
 
 
 public class MiniDatabase {
-	
+	private Database  db = new Database();
 	private boolean appendCommands = false; 
 	private LinkedList<CmdNode> commands = new LinkedList<CmdNode>();
 	public void readUserInput(){
@@ -22,6 +22,7 @@ public class MiniDatabase {
 	         input = br.readLine();
 	         
 	         if(input.equals("END")){
+	        	 db.printAll();
 	        	 System.out.println("Exiting simple database");
 	        	 break;
 	         }else if(input.equals("BEGIN")){
@@ -47,8 +48,10 @@ public class MiniDatabase {
 	         }else if(input.equals("COMMIT")){
 	        	
 	        	 appendCommands = false;
-	        	 //push all commands in command list
-	        	 //create a new empty command list
+	        	 if(commands.size() > 0){
+	        		 db.pushFromCmdNode(commands.getLast());
+	        		 commands.clear();
+	        	 }
 	        	 
 	         }else{
 	        	 
@@ -61,27 +64,29 @@ public class MiniDatabase {
 	        		 if(appendCommands){
 	        			 commands.getLast().addItem(var, val);
 	        		 }else{
-	        			 System.out.println("execute set");
+	        			 db.addItem(var, val);
 	        		 }
 	        	 }else if(fields[0].equals("GET")){
 	        		 assert(fields[0].length() == 2);
 	        		 String var = fields[1]; 
+	        		 Integer found = null;
 	        		 if(appendCommands){
-	        			 Integer found = commands.getLast().search(var);
-	        			 if(found != null){
-	        				 System.out.println(found);
-	        			 }else{
-	        				 System.out.println("NULL");
-	        			 }
-	        		 }else{
-	        			 System.out.println("execute get");
-	        		 }	        		 
+	        			 found = commands.getLast().search(var);
+	        		 }
+	        		 if(found == null){
+	        			 found = db.search(var);
+	        		 }
+	        		 System.out.println(found==null? "NULL":found);
+	        		 
 	        	 }else if(fields[0].equals("NUMEQUALTO")){
+	        		 int num = 0;
 	        		 if(appendCommands){
-	        			 System.out.println("get num count from list and tree");
-	        		 }else{
-	        			 System.out.println("get num count from tree");
-	        		 }	        		 
+	        			 num += commands.getLast().findNum(Integer.parseInt(fields[1]));
+	        			 
+	        			 //System.out.println("get num count from list and tree");
+	        		 }
+	        		 num += db.findNum(Integer.parseInt(fields[1]));
+	        		 System.out.println(num);
 	        	 }
 	         }
 

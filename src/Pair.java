@@ -5,7 +5,7 @@
 public class Pair<K, V> {
 
     private final K _first;
-    private final V _second;
+    private V _second;
 
     public static <K, V> Pair<K, V> createPair(K first, V second) {
         return new Pair<K, V>(first, second);
@@ -22,5 +22,9 @@ public class Pair<K, V> {
 
     public V getValue() {
         return _second;
+    }
+    
+    public void setValue(V second){
+    	_second = second;
     }
 }
