@@ -1,0 +1,36 @@
+SET apple 10		DB: (apple,10) CMD:
+GET orange             -
+NUMEQUALTO 20          0
+COMMIT                 -
+BEGIN                  DB: (apple,10) CMD:
+SET banana 10          DB: (apple,10) CMD:(banana,10)
+NUMEQUALTO 10          2
+SET orange 20          DB: (apple,10) CMD:(banana,10),(orange,20)
+BEGIN			 -
+SET GRAPE 30           DB: (apple,10) CMD:(banana,10),(orange,20) -> (banana,10),(orange,20),(grape 30)
+GET orange             20
+GET peach              NULL
+BEGIN                  DB: (apple,10) CMD:(banana,10),(orange,20) -> (banana,10),(orange,20),(grape 30)->(banana,10),(orange,20),(grape 30)
+BEGIN                  DB: (apple,10) CMD:(banana,10),(orange,20) -> (banana,10),(orange,20),(grape 30)->(banana,10),(orange,20),(grape 30)->(banana,10),(orange,20),(grape 30)
+NUMEQUALTO 20          1
+NUMEQUALTO 30          1
+COMMIT                 DB: (apple,10),(banana,10),(orange,20),(grape 30)
+SET peach 50           DB: (apple,10),(banana,10),(orange,20),(grape 30),(peach 50)
+ROLLBACK               NO TRANSACTION
+ROLLBACK		 NO TRANSACTION
+BEGIN			DB: (apple,10),(banana,10),(orange,20),(grape 30),(peach 50) CMD:
+SET mango 40		DB: (apple,10),(banana,10),(orange,20),(grape 30),(peach 50) CMD:(mango, 40)
+SET mango 30		DB: (apple,10),(banana,10),(orange,20),(grape 30),(peach 50) CMD:(mango, 30)
+SET apple 20		DB: (apple,10),(banana,10),(orange,20),(grape 30),(peach 50) CMD:(mango, 30),(apple,20)
+COMMIT			DB: (apple,20),(banana,10),(orange,20),(grape 30),(peach 50),(mango,30)
+BEGIN			DB: (apple,20),(banana,10),(orange,20),(grape 30),(peach 50),(mango,30) CMD:
+GET apple		20
+GET peach		50
+SET peach 15		DB: (apple,20),(banana,10),(orange,20),(grape 30),(peach 50),(mango,30) CMD:(peach, 15)
+ROLLBACK		DB: (apple,20),(banana,10),(orange,20),(grape 30),(peach 50),(mango,30)
+GET peach		50
+ROLLBACK		NO TRANSACTION
+GET mango		30
+SET mango 35		DB: (apple,20),(banana,10),(orange,20),(grape 30),(peach 50),(mango,35)
+END			DB: (apple,20),(banana,10),(orange,20),(grape 30),(peach 50),(mango,35)
+
