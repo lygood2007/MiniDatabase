@@ -1,4 +1,6 @@
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
@@ -10,31 +12,39 @@ public class MiniDatabase {
 	private Database  db = new Database();
 	private boolean appendCommands = false; 
 	private LinkedList<CmdNode> commands = new LinkedList<CmdNode>();
-	public void readUserInput(){
+	public void readUserInput() throws FileNotFoundException{
 	    //  open up standard input
 	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	    
-	   	while(true){
+	    BufferedReader test = new BufferedReader(new FileReader("test1.txt") );
+	    String input = "";
+	   	//while(true){
+	    while(input != null){
 	      //  prompt the user to enter their name
 	      System.out.print("Enter your command: ");
-	      String input;
+	  
 	      try {
-	         input = br.readLine();
-	         
+	         //input = br.readLine();
+	    	 input = test.readLine();
+		     System.out.println(input);
+	    	 
 	         if(input.equals("END")){
 	        	 db.printAll();
 	        	 System.out.println("Exiting simple database");
 	        	 break;
 	         }else if(input.equals("BEGIN")){
-
+	        	 //CmdNode command = new CmdNode();
+	        	 //commands.add(command);
+	        	 CmdNode command = null;
 	        	 if(!appendCommands){
-//	        		 
-//	        		 //create a new node and append to current list
-//	        	 }else{
 	        		 appendCommands = true;
-	        		 CmdNode command = new CmdNode();
-	        		 commands.add(command);
-	        	 }        	
+	        		 command = new CmdNode();
+	        		 
+	        	 }else{
+	        		 command = CmdNode.createFromNode(commands.getLast());
+	        		 //commands.add(cmd);
+	        	 }
+	        	 commands.add(command);
 	         }else if(input.equals("ROLLBACK")){
 	        	 if(commands.size() < 1){
 	        		 System.out.println("NO TRANSACTION");
@@ -98,7 +108,7 @@ public class MiniDatabase {
 
 	   }//while
 	}
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException {
 		MiniDatabase miniDB = new MiniDatabase();
 		miniDB.readUserInput();
 	}
