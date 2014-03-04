@@ -27,7 +27,7 @@ public class MiniDatabase {
 	         //input = br.readLine();
 	    	 input = test.readLine();
 		     System.out.println(input);
-		     db.printAll();
+		     //db.printAll();
 	         if(input.equals("END")){
 	        	 //db.printAll();
 	        	 System.out.println("Exiting simple database");
