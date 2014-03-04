@@ -16,7 +16,7 @@ public class MiniDatabase {
 	    //  open up standard input
 	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	    
-	    BufferedReader test = new BufferedReader(new FileReader("test1.txt") );
+	    BufferedReader test = new BufferedReader(new FileReader("test") );
 	    String input = "";
 	   	//while(true){
 	    while(input != null){
@@ -27,9 +27,9 @@ public class MiniDatabase {
 	         //input = br.readLine();
 	    	 input = test.readLine();
 		     System.out.println(input);
-	    	 
+		     db.printAll();
 	         if(input.equals("END")){
-	        	 db.printAll();
+	        	 //db.printAll();
 	        	 System.out.println("Exiting simple database");
 	        	 break;
 	         }else if(input.equals("BEGIN")){
